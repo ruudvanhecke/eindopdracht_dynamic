@@ -1,6 +1,9 @@
 import Container from "react-bootstrap/Container";
 import {Row} from "react-bootstrap";
 
+
+
+
 export function Section(props) {
 
 
@@ -8,13 +11,11 @@ export function Section(props) {
 
 
     return <div>
-        <h2 className={"text-center"}>{title}</h2>
+        <h1 className={"text-center m-4"}>{title}</h1>
         <Container>
             <Row>
-
                 {children}
             </Row>
-
         </Container>
     </div>
 }

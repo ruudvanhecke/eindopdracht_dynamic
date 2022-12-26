@@ -1,14 +1,22 @@
-import {collection } from "firebase/firestore";
 import {firestoreDB} from "../services/firestore";
 import {Movies} from "./movies";
-import {useCollectionData} from "react-firebase-hooks/firestore";
+import {useState, useEffect} from 'react'
+import {collection, query, onSnapshot} from "firebase/firestore"
 
 export  function MoviesFromDb() {
-    const collectionRef = collection(firestoreDB, "movies");
-    const [values] = useCollectionData(collectionRef);
-    console.log(values)
+    const [movies, setMovies] = useState([])
 
-    if (!values) return;
+    useEffect(() => {
+        const q = query(collection(firestoreDB, 'movies'))
+        onSnapshot(q, (querySnapshot) => {
+            setMovies(querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                data: doc.data()
+            })))
+        })
+    },[])
 
-    return <div><Movies movies={values}></Movies></div>
+    if (!movies.length) return;
+
+    return <div><Movies movies={movies}></Movies></div>
 }

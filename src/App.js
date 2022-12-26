@@ -6,6 +6,7 @@ import {
     Route, Routes
 } from "react-router-dom";
 import {MoviesFromDb} from "./pages/moviesFromDb";
+import {EditMoviesFromDb} from "./pages/editMoviesFromDb";
 
 function App() {
     return (
@@ -20,6 +21,8 @@ function App() {
             path="/contact/:id" comes before path="/contact" so that
             route will render when viewing an individual contact */}
                 <Route path="/movies" element={<MoviesFromDb/>}/>
+
+                <Route path="/editMovies" element={<EditMoviesFromDb/>}/>
             </Routes>
         </>
 

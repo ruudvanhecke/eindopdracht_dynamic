@@ -7,10 +7,9 @@ export function CustomNavbar() {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">MovieStar</Navbar.Brand>
+                    <Navbar.Brand href="/">MovieStar</Navbar.Brand>
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#features">Movies</Nav.Link>
+                        <Nav.Link href="/movies">Movies</Nav.Link>
                         <Nav.Link href="#pricing">Edit Movies</Nav.Link>
                     </Nav>
                 </Container>

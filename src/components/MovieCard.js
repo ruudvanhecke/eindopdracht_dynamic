@@ -1,21 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, Button, Form } from "react-bootstrap";
 import { doc, updateDoc } from "firebase/firestore";
 import { firestoreDB } from "../services/firestore";
 import {MyButton} from "./MyButton";
+import { CardContainer } from "./CardContainer";
+import { ViewCard } from "./ViewCard";
 
-export function MovieCard({ data, id }) {
+export function MovieCard({ data, id, enableEditing }) {
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState(data.title);
     const [description, setDescription] = useState(data.description);
     const [director, setDirector] = useState(data.director);
 
     const handleCancelClick = () => {
+        setData();
+    };
+
+    const setData = () => {
         setEditMode(false);
         setTitle(data.title);
         setDescription(data.description);
         setDirector(data.director);
-    };
+    }
 
     const handleSaveClick = async () => {
         setEditMode(false);
@@ -31,10 +37,17 @@ export function MovieCard({ data, id }) {
         }
     };
 
+    useEffect(() => {
+        setData()
+    }, [data])
+
+
+
     return (
         <>
             <Card style={{ width: "18rem" }} className={"m-3 shadow-lg"}>
-                <Card.Img variant="top" src={"./images/img.png"} />
+
+                <CardContainer url={"./images/img.png"}/>
                 <Card.Body>
                     {editMode ? (
                         <Form>
@@ -69,14 +82,15 @@ export function MovieCard({ data, id }) {
                         </Form>
                     ) : (
                         <>
-                            <Card.Body>
-                                <Card.Title>{title}</Card.Title>
-                                <Card.Text>{description}</Card.Text>
-                                <Card.Text><strong>Director:</strong> {director}</Card.Text>
-                            </Card.Body>
-                            <Card.Footer>
+                        <ViewCard title={title} description={description} director={director}/>
+
+                            { enableEditing ? (
+                                <Card.Text>
                                 <MyButton variant={"primary"} onClick={() => setEditMode(true)} children={"Edit"}/>
-                            </Card.Footer>
+                                </Card.Text>
+                            ) : 
+                                <></>
+                            }
                         </>
                     )}
                 </Card.Body>

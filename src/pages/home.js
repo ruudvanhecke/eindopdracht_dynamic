@@ -25,7 +25,7 @@ export function Home() {
                     <p className="lead my-3">Find all your movies right here! Mark them as favorite and watch them
                         later! You can also make edits to titles, descriptions, actors</p>
                     <a href="/movies" className="btn btn-light my-2 m-1">Browse movies</a>
-                    <a href="/editMovies" className="btn btn-secondary my-2 m-1">Edit movies</a>
+                    <a href="/directors" className="btn btn-secondary my-2 m-1">Vieuw directors</a>
                 </div>
             </div>
         </div>

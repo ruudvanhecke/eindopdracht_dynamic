@@ -11,6 +11,7 @@ export function CustomNavbar() {
                     <Nav className="me-auto">
                         <Nav.Link href="/movies">Movies</Nav.Link>
                         <Nav.Link href="/directors">Directors</Nav.Link>
+                        <Nav.Link href="/favorites">My Favorites</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>

@@ -2,6 +2,7 @@ import {Route, Routes} from "react-router-dom";
 import {Home} from "../pages/home";
 import {MoviesFromDb} from "../pages/moviesFromDb";
 import {DirectorsFromDb} from "../pages/directorsFromDb";
+import { Favorites } from "../pages/favorites";
 
 export function Routing () {
 
@@ -18,6 +19,7 @@ export function Routing () {
         <Route path="/movies" element={<MoviesFromDb/>}/>
 
         <Route path="/directors" element={<DirectorsFromDb/>}/>
+        <Route path="/favorites" element={<Favorites/>}/>
 
     </Routes>
 }

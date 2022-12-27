@@ -30,15 +30,15 @@ export function SearchBar(props) {
     }
 
     return (
-        <div class="form-group row">
+        <div className={"form-group row"}>
         <Form className={"d-flex justify-content-center"} >
-              <div class="col-xs-2 m-1">
+              <div className={"col-xs-2 m-1"}>
             <Form.Control onChange={(e) => searchTitle(e.target.value)} placeholder="search movie title"/>
             </div>
-            <div class="col-xs-4 m-1">
+            <div className={"col-xs-4 m-1"}>
             <Form.Control  onChange={(e) => searchDescription(e.target.value)} placeholder="search movie description"/>
             </div>
-            <div class="col-xs-3 m-1">
+            <div className={"col-xs-3 m-1"}>
             <Form.Control onChange={(e) => searchDirectory(e.target.value)} placeholder="search movie director"/>
             </div>
         </Form>

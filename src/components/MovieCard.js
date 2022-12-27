@@ -11,6 +11,7 @@ export function MovieCard({ data, id, enableEditing }) {
     const [title, setTitle] = useState(data.title);
     const [description, setDescription] = useState(data.description);
     const [director, setDirector] = useState(data.director);
+    const [favoriteMovies, setFavoriteMovies] = useState([])
 
     const handleCancelClick = () => {
         setData();
@@ -37,10 +38,21 @@ export function MovieCard({ data, id, enableEditing }) {
         }
     };
 
+    const setFavorite = (movie) => {
+        const newFavoriteMovies = [...favoriteMovies];
+        newFavoriteMovies.push({data: movie});
+        
+        localStorage.setItem('favoriteMovies', JSON.stringify(newFavoriteMovies));
+        setFavoriteMovies(newFavoriteMovies);
+    }
+
     useEffect(() => {
         setData()
     }, [data])
 
+    useEffect(() => {
+        setFavoriteMovies(localStorage.getItem('favoriteMovies') ?? [])
+    }, [])
 
 
     return (
@@ -83,6 +95,9 @@ export function MovieCard({ data, id, enableEditing }) {
                     ) : (
                         <>
                         <ViewCard title={title} description={description} director={director}/>
+                        <Card.Text>
+                            <MyButton variant={"primary"} onClick={() => setFavorite(data)} children={"Favorite"}/>
+                        </Card.Text>
 
                             { enableEditing ? (
                                 <Card.Text>

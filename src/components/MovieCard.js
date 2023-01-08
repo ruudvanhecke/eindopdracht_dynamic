@@ -4,6 +4,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { firestoreDB } from "../services/firestore";
 import {MyButton} from "./MyButton";
 import { CardContainer } from "./CardContainer";
+import {BsHeart, BsHeartFill} from "react-icons/bs";
 import { ViewCard } from "./ViewCard";
 
 export function MovieCard({ data, id, enableEditing }) {
@@ -11,8 +12,8 @@ export function MovieCard({ data, id, enableEditing }) {
     const [title, setTitle] = useState(data.title);
     const [description, setDescription] = useState(data.description);
     const [director, setDirector] = useState(data.director);
-    const [favoriteMovies, setFavoriteMovies] = useState([])
-
+    const [favoriteMovies, setFavoriteMovies] = useState(JSON.parse(localStorage.getItem("favoriteMovies")) ?? []);
+    
     const handleCancelClick = () => {
         setData();
     };
@@ -38,21 +39,32 @@ export function MovieCard({ data, id, enableEditing }) {
         }
     };
 
+    const isFavorite = () => {
+        return favoriteMovies.filter((movie) => movie.title === data.title)?.length > 0
+    }
+
+
     const setFavorite = (movie) => {
-        const newFavoriteMovies = [...favoriteMovies];
-        newFavoriteMovies.push({data: movie});
-        
-        localStorage.setItem('favoriteMovies', JSON.stringify(newFavoriteMovies));
-        setFavoriteMovies(newFavoriteMovies);
+        const currentFavoriteMovies = getFavorites();
+        currentFavoriteMovies.push(movie);
+        localStorage.setItem('favoriteMovies', JSON.stringify(currentFavoriteMovies));
+        setFavoriteMovies(currentFavoriteMovies);
+    }
+
+    const removeFavorite = (movie) => {
+        const currentFavoriteMovies = getFavorites();
+        const newFavoriteList = currentFavoriteMovies.filter((mv) => mv.title !== movie.title);
+        localStorage.setItem('favoriteMovies', JSON.stringify(newFavoriteList));
+        setFavoriteMovies(newFavoriteList);
+    }
+
+    const getFavorites = () => {
+        return JSON.parse(localStorage.getItem('favoriteMovies')) ?? [];
     }
 
     useEffect(() => {
         setData()
     }, [data])
-
-    useEffect(() => {
-        setFavoriteMovies(localStorage.getItem('favoriteMovies') ?? [])
-    }, [])
 
 
     return (
@@ -96,7 +108,15 @@ export function MovieCard({ data, id, enableEditing }) {
                         <>
                         <ViewCard title={title} description={description} director={director}/>
                         <Card.Text>
-                            <MyButton variant={"primary"} onClick={() => setFavorite(data)} children={"Favorite"}/>
+                            {  isFavorite() ? (
+                            <Card.Text>
+                            <MyButton variant={"light"} onClick={() => removeFavorite(data)} children={"Remove from favorite"}><BsHeart/></MyButton>
+                             </Card.Text>
+                            ) : 
+                            <Card.Text>
+                            <MyButton variant={"light"} onClick={() => setFavorite(data)} children={"Favorite"}><BsHeartFill/></MyButton>
+                             </Card.Text>
+                            }
                         </Card.Text>
 
                             { enableEditing ? (
